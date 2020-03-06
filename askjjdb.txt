@@ -1,0 +1,101 @@
+import json
+from datetime import date
+import os
+
+data = date.today()
+data_atual = '{}/{}/{}'.format(data.day, data.month, data.year)
+
+dados = open('ranking.json').read()
+
+categorias = ["3points", "points", "assistants",
+              "rebounds", "steals", "blocks"]
+times = {
+    'ATL': "Atlanta Hawks",
+    'BOS': "Boston Celtics",
+    'BKN': "Brooklyn Nets",
+    'CHA': "Charlotte Hornets",
+    'CHI': "Chicago Bulls",
+    'CLE': "Cleveland Cavaliers",
+    'DAL': "Dallas Mavericks",
+    'DEN': "Denver Nuggets",
+    'DET': "Detroit Pistons",
+    'GSW': "Golden State Warriors",
+    'HOU': "Houston Rockets",
+    'IND': "Indiana Pacers",
+    'LAC': "LA Clippers",
+    'LAL': "Los Angeles Lakers",
+    'MEM': "Memphis Grizzlies",
+    'MIA': "Miami Heat",
+    'MIL': "Milwaukee Bucks",
+    'MIN': "Minnesota Timberwolves",
+    'NOP': "New Orleans Pelicans",
+    'NYK': "New York Knicks",
+    'OKC': "Oklahoma City Thunder",
+    'ORL': "Orlando Magic1",
+    'PHI': "Philadelphia 76ers",
+    'PHX': "Phoenix Suns",
+    'POR': "Portland Trail Blazers",
+    'SAC': "Sacramento Kings",
+    'SAS': "San Antonio Spurs",
+    'TOR': "Toronto Raptors",
+    'UTA': "Utah Jazz",
+    'WAS': "Washington Wizards",
+}
+opcoes = {
+    1: "points",
+    2: "assistants",
+    3: "3points",
+    4: "rebounds",
+    5: "steals",
+    6: "blocks"
+}
+
+objeto = json.loads(dados)
+
+
+print('NBA Simple Stats Table - TOP 10')
+op = 1
+while op != 0:
+    print('Categories: ')
+    print('1 - Points')
+    print('2 - Assistants')
+    print('3 - 3 points')
+    print('4 - Rebounds')
+    print('5 - Steals')
+    print('6 - Blocks')
+    print('0 - /Exit/')
+
+    op = int(input('Choose your option: '))
+    os.system('cls')
+
+    if op == 1:
+        jogadores = objeto[categorias["points"]]
+        print(f'Category: POINTS              Updated: {data_atual}')
+    elif op == 2:
+        jogadores = objeto[categorias["assistants"]]
+        print(f'Category: ASSISTANTS          Updated: {data_atual}')
+    elif op == 3:
+        jogadores = objeto[categorias["3points"]]
+        print(f'Category: 3 POINTS            Updated: {data_atual}')
+    elif op == 4:
+        jogadores = objeto[categorias["rebounds"]]
+        print(f'Category: REBOUNDS            Updated: {data_atual}')
+    elif op == 5:
+        jogadores = objeto[categorias["steals"]]
+        print(f'Category: STEALS              Updated: {data_atual}')
+    elif op == 6:
+        jogadores = objeto[categorias["blocks"]]
+        print(f'Category: BLOCKS              Updated: {data_atual}')
+    elif op == 0:
+        print('Thank You. Please come again!')
+    else:
+        print('Error: Invalid Option. Try Again!')
+        op = 0
+
+    k = opcoes[op]
+    jogadores = objeto[categorias[k]]
+    for i in range(0, 10):
+        jogador = jogadores[i]
+        time = jogador['team']
+        print(
+            f"{jogador['pos']}°  --  {jogador['player']}  --  {times[time]}  --  total:{jogador['total']}")
